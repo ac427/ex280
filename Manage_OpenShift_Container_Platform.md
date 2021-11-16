@@ -59,7 +59,7 @@ oc status
 ```
 ###  Troubleshoot common cluster events and alerts
 ```
-
+oc describe pod $podname
 oc adm node-logs -u $user $node-name
 oc debug node/$node-name
 oc rsh $pod-name
