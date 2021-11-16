@@ -1,3 +1,5 @@
+From https://www.redhat.com/en/services/training/ex280-red-hat-certified-specialist-in-openshift-administration-exam?section=Objectives
+
 ### Manage OpenShift Container Platform
 
     Use the command-line interface to manage and configure an OpenShift cluster
