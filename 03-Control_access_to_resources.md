@@ -150,9 +150,9 @@ $oc create secret docker-registry -h
 ```
 
 
-# Lab; add user linda and create group qa-users and grand cluseterrole view to qa-users
+# Lab: add user linda and create group qa-users and grand cluseterrole view to qa-users
 
-# skipping the user creation
+#### skipping the user creation
 
 #### on first login
 ```
