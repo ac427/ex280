@@ -62,6 +62,24 @@ $oc get pods --all-namespaces | wc -l
 
 ```
 
+#### To view the Users in clusterrolebinding ( Eventhough we created clusterrolebinding, `oc describe clusterrolebinding` is not showing ex280-pod-reader. Not sure if it is bug or my misunderstanding. Below command shows the Kind as ClusterRole though)
+
+```
+$oc describe rolebinding.rbac ex280-pod-reader
+Name:         ex280-pod-reader
+Labels:       <none>
+Annotations:  <none>
+Role:
+  Kind:  ClusterRole
+  Name:  ex280-pod-reader
+Subjects:
+  Kind  Name  Namespace
+  ----  ----  ---------
+  User  joe   
+
+```
+
+
 
 
 
