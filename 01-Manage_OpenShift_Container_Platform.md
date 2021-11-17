@@ -1,7 +1,20 @@
 ### Create and delete projects
+
 ```
-oc new-project $project-name
-oc del
+$oc new-project my-website
+Now using project "my-website" on server "https://api.crc.testing:6443".
+
+You can add applications to this project with the 'new-app' command. For example, try:
+
+    oc new-app rails-postgresql-example
+
+to build a new example application in Ruby. Or use kubectl to deploy a simple Kubernetes application:
+
+    kubectl create deployment hello-node --image=k8s.gcr.io/serve_hostname
+
+$oc delete project my-website
+project.project.openshift.io "my-website" deleted
+
 ```
 
 ### Create new app
