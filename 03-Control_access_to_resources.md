@@ -148,3 +148,63 @@ type: Opaque
 ```
 $oc create secret docker-registry -h
 ```
+
+
+# Lab; add user linda and create group qa-users and grand cluseterrole view to qa-users
+
+# skipping the user creation
+
+#### on first login
+```
+$oc login -u linda -p password
+Login successful.
+
+You don't have any projects. You can try to create a new project, by running
+
+    oc new-project <projectname>
+
+$oc get all
+Error from server (Forbidden): replicationcontrollers is forbidden: User "linda" cannot list resource "replicationcontrollers" in API group "" in the namespace "default"
+Error from server (Forbidden): services is forbidden: User "linda" cannot list resource "services" in API group "" in the namespace "default"
+Error from server (Forbidden): daemonsets.apps is forbidden: User "linda" cannot list resource "daemonsets" in API group "apps" in the namespace "default"
+Error from server (Forbidden): deployments.apps is forbidden: User "linda" cannot list resource "deployments" in API group "apps" in the namespace "default"
+Error from server (Forbidden): replicasets.apps is forbidden: User "linda" cannot list resource "replicasets" in API group "apps" in the namespace "default"
+Error from server (Forbidden): statefulsets.apps is forbidden: User "linda" cannot list resource "statefulsets" in API group "apps" in the namespace "default"
+Error from server (Forbidden): horizontalpodautoscalers.autoscaling is forbidden: User "linda" cannot list resource "horizontalpodautoscalers" in API group "autoscaling" in the namespace "default"
+Error from server (Forbidden): cronjobs.batch is forbidden: User "linda" cannot list resource "cronjobs" in API group "batch" in the namespace "default"
+Error from server (Forbidden): jobs.batch is forbidden: User "linda" cannot list resource "jobs" in API group "batch" in the namespace "default"
+Error from server (Forbidden): deploymentconfigs.apps.openshift.io is forbidden: User "linda" cannot list resource "deploymentconfigs" in API group "apps.openshift.io" in the namespace "default"
+Error from server (Forbidden): buildconfigs.build.openshift.io is forbidden: User "linda" cannot list resource "buildconfigs" in API group "build.openshift.io" in the namespace "default"
+Error from server (Forbidden): builds.build.openshift.io is forbidden: User "linda" cannot list resource "builds" in API group "build.openshift.io" in the namespace "default"
+Error from server (Forbidden): imagestreams.image.openshift.io is forbidden: User "linda" cannot list resource "imagestreams" in API group "image.openshift.io" in the namespace "default"
+Error from server (Forbidden): routes.route.openshift.io is forbidden: User "linda" cannot list resource "routes" in API group "route.openshift.io" in the namespace "default"
+
+```
+
+#### as admin
+
+
+```
+$oc adm groups new  qa-users
+group.user.openshift.io/qa-users created
+$oc policy add-role-to-group view qa-users
+clusterrole.rbac.authorization.k8s.io/view added: "qa-users"
+
+```
+
+#### as linda
+
+
+```
+
+$oc login -u linda -p password
+Login successful.
+
+You have one project on this server: "default"
+
+Using project "default".
+$oc get all
+NAME                 TYPE           CLUSTER-IP   EXTERNAL-IP                            PORT(S)   AGE
+service/kubernetes   ClusterIP      10.217.4.1   <none>                                 443/TCP   10d
+service/openshift    ExternalName   <none>       kubernetes.default.svc.cluster.local   <none>    10d
+```
