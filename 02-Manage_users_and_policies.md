@@ -9,6 +9,12 @@ kubeadmin   bc902c7b-0adc-4141-b3f9-3071f5d0056a               developer:kubeadm
 
 ### Add user abc with HTPasswd auth
 
+#### Lookup the file name/data that is used for htpasswd. We will use in `oc set data` to overwrite later
+```
+oc get oauth -o yaml
+
+```
+
 ```
 $oc extract secret/htpass-secret -n openshift-config --to /tmp --confirm
 /tmp/htpasswd
