@@ -97,3 +97,17 @@ $oc policy add-role-to-group edit developers
 clusterrole.rbac.authorization.k8s.io/edit added: "developers"
 
 ```
+
+#### Add user abc as cluster-admin
+
+```
+$oc adm policy add-cluster-role-to-user cluster-admin abc
+clusterrole.rbac.authorization.k8s.io/cluster-admin added: "abc"
+```
+
+
+#### To view all the clusterroles on the cluster
+
+```
+$oc get clusterrole 
+```
