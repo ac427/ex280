@@ -66,7 +66,7 @@ abc
 
 ### Manage groups 
 
-#### Create a group deelopers
+#### Create a group developers
 
 ```
 $oc adm groups new developers
@@ -88,5 +88,12 @@ group.user.openshift.io/developers added: "abc"
 $oc get groups
 NAME         USERS
 developers   abc
+
+```
+#### To put use of groups, we need to add policies. In below example, we are adding edit clusterrole to developers
+
+```
+$oc policy add-role-to-group edit developers
+clusterrole.rbac.authorization.k8s.io/edit added: "developers"
 
 ```
