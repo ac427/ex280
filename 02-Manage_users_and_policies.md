@@ -1,7 +1,6 @@
 ### Get current users
 
 ```
-adme.md  Readme.md
 $oc get users
 NAME        UID                                    FULL NAME   IDENTITIES
 developer   91e87940-982a-4bac-9d89-dc58235ab63f               developer:developer
