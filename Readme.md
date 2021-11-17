@@ -1,6 +1,6 @@
 From https://www.redhat.com/en/services/training/ex280-red-hat-certified-specialist-in-openshift-administration-exam?section=Objectives
 
-### Manage OpenShift Container Platform
+### 01 - Manage OpenShift Container Platform
 
     Use the command-line interface to manage and configure an OpenShift cluster
     Use the web console to manage and configure an OpenShift cluster
@@ -12,7 +12,7 @@ From https://www.redhat.com/en/services/training/ex280-red-hat-certified-special
     Troubleshoot common cluster events and alerts
     Use product documentation
 
-### Manage users and policies
+### 02 - Manage users and policies
 
     Configure the HTPasswd identity provider for authentication
     Create and delete users
@@ -20,14 +20,14 @@ From https://www.redhat.com/en/services/training/ex280-red-hat-certified-special
     Modify user and group permissions
     Create and manage groups
 
-### Control access to resources
+### 03 - Control access to resources
 
     Define role-based access controls
     Apply permissions to users
     Create and apply secrets to manage sensitive information
     Create service accounts and apply permissions using security context constraints
 
-### Configure networking components
+### 04 - Configure networking components
 
     Troubleshoot software defined networking
     Create and edit external routes
@@ -35,13 +35,13 @@ From https://www.redhat.com/en/services/training/ex280-red-hat-certified-special
     Create a self signed certificate
     Secure routes using TLS certificates
 
-### Configure pod scheduling
+### 05 - Configure pod scheduling
 
     Limit resource usage
     Scale applications to meet increased demand
     Control pod placement across cluster nodes
 
-### Configure cluster scaling
+### 06 - Configure cluster scaling
 
     Manually control the number of cluster workers
     Automatically scale the number of cluster workers
