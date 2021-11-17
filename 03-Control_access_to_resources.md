@@ -73,6 +73,20 @@ A Secret is an object that contains a small amount of sensitive data such as a p
 
 Secrets are similar to ConfigMaps but are specifically intended to hold confidential data.
 
+Kubernetes Secret Types
+
+|Builtin Type |	Usage |
+| ------ | ------ |
+|Opaque |	arbitrary user-defined data|
+|kubernetes.io/service-account-token |	service account token |
+|kubernetes.io/dockercfg | 	serialized ~/.dockercfg file |
+|kubernetes.io/dockerconfigjson | 	serialized ~/.docker/config.json file |
+|kubernetes.io/basic-auth | 	credentials for basic authentication |
+|kubernetes.io/ssh-auth | 	credentials for SSH authentication |
+kubernetes.io/tls | 	data for a TLS client or server |
+|bootstrap.kubernetes.io/token |	bootstrap token data |
+
+Options Available on `oc create secret`
 
 |  Type |	Usage |
 | ------ | ------ |
