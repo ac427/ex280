@@ -30,7 +30,7 @@ $ oc new-app --docker-image=bitnami/nginx --name=bnginx
     service "bnginx" created
 --> Success
     Application is not exposed. You can expose services to the outside world by executing one or more of the commands below:
-     'oc expose service/bnginx' 
+     'oc expose service/bnginx'
     Run 'oc status' to view your app.
 ```
 ###### There are no option to delete all resources created with new-app. You have to delete one by one by running

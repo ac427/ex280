@@ -75,7 +75,7 @@ Role:
 Subjects:
   Kind  Name  Namespace
   ----  ----  ---------
-  User  joe   
+  User  joe
 
 ```
 

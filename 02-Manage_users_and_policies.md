@@ -19,10 +19,10 @@ oc get oauth -o yaml
 $oc extract secret/htpass-secret -n openshift-config --to /tmp --confirm
 /tmp/htpasswd
 ############## Important. The file doesn't have new line at the end hence running echo ##########################
-$echo "" >> /tmp/htpasswd 
+$echo "" >> /tmp/htpasswd
 $htpasswd -B -b /tmp/htpasswd abc passw0rd
 Adding password for user abc
-$cat /tmp/htpasswd 
+$cat /tmp/htpasswd
 kubeadmin:$2a$10$EcSP9zfYjJpothmuetKhaOwOUAuqJaxCnpE4UV7pFS9VnENYyE6mW
 developer:$2a$10$5sZOdEYD1tmI63QPhXa7Auv2gJ96oiN/jr3gVthujsagFJGIjTW9S
 abc:$2y$05$SZXGrbjlr8wa20Av5YyxIefbURqKM5HMq3fLYqprJ8WaYcM9Pc38O
@@ -62,9 +62,9 @@ abc
 * Extract secret/htpass-secret to file,
 * run htpasswd to delete the user from the downloaded file
 * update secret/htpass-secret
-* restart deployment 
+* restart deployment
 
-### Manage groups 
+### Manage groups
 
 #### Create a group developers
 
