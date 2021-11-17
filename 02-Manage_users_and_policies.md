@@ -109,5 +109,6 @@ clusterrole.rbac.authorization.k8s.io/cluster-admin added: "abc"
 #### To view all the clusterroles on the cluster
 
 ```
-$oc get clusterrole 
+$oc get clusterrole
+$oc describe clusterrole
 ```
