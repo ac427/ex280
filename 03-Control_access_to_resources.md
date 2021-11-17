@@ -67,23 +67,19 @@ $oc get pods --all-namespaces | wc -l
 
 # Secrets
 
-https://kubernetes.io/docs/concepts/configuration/secret/
+Read about about secrets in https://kubernetes.io/docs/concepts/configuration/secret/
 
 A Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key. Such information might otherwise be put in a Pod specification or in a container image. Using a Secret means that you don't need to include confidential data in your application code.
 
 Secrets are similar to ConfigMaps but are specifically intended to hold confidential data.
 
 
-|Builtin | Type |	Usage |
+|  Type |	Usage |
 | ------ | ------ |
-|Opaque |	arbitrary user-defined data|
-|kubernetes.io/service-account-token |	service account token |
-|kubernetes.io/dockercfg | 	serialized ~/.dockercfg file |
-|kubernetes.io/dockerconfigjson | 	serialized ~/.docker/config.json file |
-|kubernetes.io/basic-auth | 	credentials for basic authentication |
-|kubernetes.io/ssh-auth | 	credentials for SSH authentication |
-kubernetes.io/tls | 	data for a TLS client or server |
-|bootstrap.kubernetes.io/token |	bootstrap token data |
+| docker-registry |Create a secret for use with a Docker registry |
+| generic  |       Create a secret from a local file, directory, or literal value |
+| tls      |       Create a TLS secret |
+
 
 ```
 $oc create secret generic empty-secret
@@ -115,4 +111,8 @@ metadata:
   resourceVersion: "247178"
   uid: 1887e73c-6f31-4cd6-998e-e43163e97707
 type: Opaque
+```
+#### Check the help page for configuring docker auth
+```
+$oc create secret docker-registry -h
 ```
