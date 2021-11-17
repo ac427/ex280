@@ -63,3 +63,30 @@ abc
 * run htpasswd to delete the user from the downloaded file
 * update secret/htpass-secret
 * restart deployment 
+
+### Manage groups 
+
+#### Create a group deelopers
+
+```
+$oc adm groups new developers
+group.user.openshift.io/developers created
+
+```
+#### Add user abc to newly created group developers
+
+```
+$oc adm groups add-users developers abc
+group.user.openshift.io/developers added: "abc"
+
+```
+
+#### View groups
+
+```
+
+$oc get groups
+NAME         USERS
+developers   abc
+
+```
