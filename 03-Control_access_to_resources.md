@@ -149,6 +149,8 @@ type: Opaque
 $oc create secret docker-registry -h
 ```
 
+### Create a deployment and use env from secrets
+
 ```
 $oc create secret generic mysql --from-literal password=password --from-literal database=mydb --from-literal hostname=mysql --from-literal root_password=password
 secret/mysql created
