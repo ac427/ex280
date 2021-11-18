@@ -36,7 +36,7 @@ $oc whoami
 joe
 ```
 
-### Add Joe to list all pods in all-namespaces
+### Add clusterrole to user. Grant user Joe to list pods in all-namespaces
 
 ```
 $oc login -u kubeadmin -p FV3b7-aTbLJ-UmrWu-aqDGe https://api.crc.testing:6443
@@ -149,6 +149,69 @@ type: Opaque
 $oc create secret docker-registry -h
 ```
 
+```
+$oc create secret generic mysql --from-literal password=password --from-literal database=mydb --from-literal hostname=mysql --from-literal root_password=password
+secret/mysql created
+$oc new-app --name mysql --docker-image bitnami/mysql 
+Flag --docker-image has been deprecated, Deprecated flag use --image
+--> Found container image 62288cd (20 hours old) from Docker Hub for "bitnami/mysql"
+
+    * An image stream tag will be created as "mysql:latest" that will track this image
+
+--> Creating resources ...
+    imagestream.image.openshift.io "mysql" created
+    deployment.apps "mysql" created
+    service "mysql" created
+--> Success
+    Application is not exposed. You can expose services to the outside world by executing one or more of the commands below:
+     'oc expose service/mysql' 
+    Run 'oc status' to view your app.
+
+```
+
+#### Pod crashed!!!
+```
+$oc get pods
+NAME                     READY   STATUS             RESTARTS      AGE
+mysql-59cdc6d744-rwb49   0/1     CrashLoopBackOff   3 (30s ago)   99s
+$oc logs mysql-59cdc6d744-rwb49
+mysql 01:08:50.03 
+mysql 01:08:50.03 Welcome to the Bitnami mysql container
+mysql 01:08:50.03 Subscribe to project updates by watching https://github.com/bitnami/bitnami-docker-mysql
+mysql 01:08:50.03 Submit issues and feature requests at https://github.com/bitnami/bitnami-docker-mysql/issues
+mysql 01:08:50.03 
+mysql 01:08:50.04 INFO  ==> ** Starting MySQL setup **
+mysql 01:08:50.07 INFO  ==> Validating settings in MYSQL_*/MARIADB_* env vars
+mysql 01:08:50.07 ERROR ==> The MYSQL_ROOT_PASSWORD environment variable is empty or not set. Set the environment variable ALLOW_EMPTY_PASSWORD=yes to allow the container to be started with blank passwords. This is recommended only for development.
+```
+
+
+```
+
+$oc set env deployment/mysql --from secret/mysql --prefix MYSQL_
+deployment.apps/mysql updated
+$oc get pods
+NAME                     READY   STATUS    RESTARTS   AGE
+mysql-58dd56878f-8hf2s   1/1     Running   0          10s
+
+```
+
+
+```
+$oc rsh mysql-58dd56878f-8hf2s env | grep MYSQL
+MYSQL_HOSTNAME=mysql
+MYSQL_PASSWORD=password
+MYSQL_ROOT_PASSWORD=password
+MYSQL_DATABASE=mydb
+MYSQL_PORT=tcp://10.217.4.19:3306
+MYSQL_PORT_3306_TCP=tcp://10.217.4.19:3306
+MYSQL_SERVICE_HOST=10.217.4.19
+MYSQL_SERVICE_PORT=3306
+MYSQL_PORT_3306_TCP_PORT=3306
+MYSQL_PORT_3306_TCP_ADDR=10.217.4.19
+MYSQL_SERVICE_PORT_3306_TCP=3306
+MYSQL_PORT_3306_TCP_PROTO=tcp
+```
 
 # Lab: add user linda and create group qa-users and grand cluseterrole view to qa-users
 
