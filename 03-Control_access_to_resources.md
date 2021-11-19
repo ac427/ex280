@@ -273,3 +273,99 @@ NAME                 TYPE           CLUSTER-IP   EXTERNAL-IP                    
 service/kubernetes   ClusterIP      10.217.4.1   <none>                                 443/TCP   10d
 service/openshift    ExternalName   <none>       kubernetes.default.svc.cluster.local   <none>    10d
 ```
+
+# Service Accounts
+
+```
+# -n namespace_name is optional
+$oc create sa mysa
+serviceaccount/mysa created
+$oc get sa
+NAME       SECRETS   AGE
+builder    2         10h
+default    2         10h
+deployer   2         10h
+mysa       2         50s
+```
+# Manging Security Context Constraints (SCC)
+
+SCC is an OpenShift resource similar to Kubernetes Security Context, that restrics access to resources
+
+- Diffrent SCCs are available to control
+  - Running root containers
+  - Usinghost dir as volumes
+  - Changing the User ID
+  - Changing SELinux context of a container
+
+```
+$oc get scc
+NAME                              PRIV    CAPS         SELINUX     RUNASUSER          FSGROUP     SUPGROUP    PRIORITY     READONLYROOTFS   VOLUMES
+anyuid                            false   <no value>   MustRunAs   RunAsAny           RunAsAny    RunAsAny    10           false            ["configMap","downwardAPI","emptyDir","persistentVolumeClaim","projected","secret"]
+hostaccess                        false   <no value>   MustRunAs   MustRunAsRange     MustRunAs   RunAsAny    <no value>   false            ["configMap","downwardAPI","emptyDir","hostPath","persistentVolumeClaim","projected","secret"]
+hostmount-anyuid                  false   <no value>   MustRunAs   RunAsAny           RunAsAny    RunAsAny    <no value>   false            ["configMap","downwardAPI","emptyDir","hostPath","nfs","persistentVolumeClaim","projected","secret"]
+hostnetwork                       false   <no value>   MustRunAs   MustRunAsRange     MustRunAs   MustRunAs   <no value>   false            ["configMap","downwardAPI","emptyDir","persistentVolumeClaim","projected","secret"]
+machine-api-termination-handler   false   <no value>   MustRunAs   RunAsAny           MustRunAs   MustRunAs   <no value>   false            ["downwardAPI","hostPath"]
+nonroot                           false   <no value>   MustRunAs   MustRunAsNonRoot   RunAsAny    RunAsAny    <no value>   false            ["configMap","downwardAPI","emptyDir","persistentVolumeClaim","projected","secret"]
+privileged                        true    ["*"]        RunAsAny    RunAsAny           RunAsAny    RunAsAny    <no value>   false            ["*"]
+restricted                        false   <no value>   MustRunAs   MustRunAsRange     MustRunAs   RunAsAny    <no value>   false            ["configMap","downwardAPI","emptyDir","persistentVolumeClaim","projected","secret"]
+```
+
+#### see the SCC in use by pod
+
+```
+oc describe pod <podname> | grep scc to
+```
+#### If the pod is crashing because of SCC. You can debug with below
+
+```
+oc get pod <podname> -o yaml | oc adm policy scc-subject-review -f -
+```
+
+#### Once SA is connected to SCC it can be bound to a deployment or pod
+
+### Lab: run new-app using docker image nginx which runs a root
+
+```
+$oc new-app --name scc-nginx --image nginx
+--> Found container image ea335ee (39 hours old) from Docker Hub for "nginx"
+
+    * An image stream tag will be created as "scc-nginx:latest" that will track this image
+
+--> Creating resources ...
+    imagestream.image.openshift.io "scc-nginx" created
+    deployment.apps "scc-nginx" created
+    service "scc-nginx" created
+--> Success
+    Application is not exposed. You can expose services to the outside world by executing one or more of the commands below:
+     'oc expose service/scc-nginx' 
+    Run 'oc status' to view your app.
+$oc get pods
+NAME                         READY   STATUS   RESTARTS   AGE
+scc-nginx-6865677ffb-5knl5   0/1     Error    0          3s
+$oc logs scc-nginx-6865677ffb-5knl5
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+10-listen-on-ipv6-by-default.sh: info: can not modify /etc/nginx/conf.d/default.conf (read-only file system?)
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+/docker-entrypoint.sh: Configuration complete; ready for start up
+2021/11/19 01:58:51 [warn] 1#1: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /etc/nginx/nginx.conf:2
+nginx: [warn] the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /etc/nginx/nginx.conf:2
+2021/11/19 01:58:51 [emerg] 1#1: mkdir() "/var/cache/nginx/client_temp" failed (13: Permission denied)
+nginx: [emerg] mkdir() "/var/cache/nginx/client_temp" failed (13: Permission denied)
+$oc get pod scc-nginx-6865677ffb-5knl5 -o yaml | oc adm policy scc-subject-review -f -
+RESOURCE                         ALLOWED BY   
+Pod/scc-nginx-6865677ffb-5knl5   anyuid       
+$oc create sa sa-nginx
+serviceaccount/sa-nginx created
+$oc adm policy add-scc-to-user anyuid -z sa-nginx
+clusterrole.rbac.authorization.k8s.io/system:openshift:scc:anyuid added: "sa-nginx"
+$oc set sa deployment/scc-nginx sa-nginx
+deployment.apps/scc-nginx serviceaccount updated
+$oc get pods
+NAME                         READY   STATUS        RESTARTS   AGE
+scc-nginx-6865677ffb-5knl5   0/1     Terminating   5          3m25s
+scc-nginx-79969c749b-fkxps   1/1     Running       0          3s
+
+```
