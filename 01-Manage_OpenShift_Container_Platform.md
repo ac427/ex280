@@ -8,6 +8,12 @@
  -    Kubernetes namespace with additional annotations
  -    Central vehicle for managing resource access for regular users
  -    Lets community of users organize and manage content in isolation from other communities
+ - Each project has own:
+
+   -  Objects: Pods, services, replication controllers, etc.
+   -  Policies: Rules that specify which users can or cannot perform actions on objects
+   -  Constraints: Quotas for objects that can be limited
+   -  Service accounts: Users that act automatically with access to project objects
 
 ### Create and delete projects
 
