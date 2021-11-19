@@ -98,4 +98,4 @@ oc cp $filename $pod-name:/$path
 
 # GUI - Resource Exploration [Lab](https://cloud.scorm.com/vault/8751c1a1-e481-4e39-b374-640261ebcb43/content/courses/A9KI96X2QE/7258c7145e5b/20/03_OpenShift_User_Experience/03_01_Demonstrate_OpenShift_Resources_Lab.html#_demonstrate_the_developer_perspective) 
 
-[Local copy as pdf](https://github.com/ac427/ex-280/blob/main/docs/Resource%20Exploration%20Lab.pdf)
+[Local copy as pdf](https://github.com/ac427/ex-280/blob/main/docs/Resources_Lab.html)
