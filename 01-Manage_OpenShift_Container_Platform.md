@@ -1,3 +1,14 @@
+# Projects
+
+ -   Allows groups of users or developers to work together
+ -   Unit of isolation and collaboration
+ -    Defines scope of resources
+ -    Allows project administrators and collaborators to manage resources
+ -    Restricts and tracks use of resources with quotas and limits
+ -    Kubernetes namespace with additional annotations
+ -    Central vehicle for managing resource access for regular users
+ -    Lets community of users organize and manage content in isolation from other communities
+
 ### Create and delete projects
 
 ```
