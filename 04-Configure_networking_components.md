@@ -41,3 +41,90 @@ $ oc get configmap/dns-default -n openshift-dns -o yaml
 $ oc logs -n openshift-dns-operator deployment/dns-operator -c dns-operator
 
 ```
+
+
+# Lab: Create edge route
+
+```
+# create a new project
+oc new-project netlab
+# create new deployment
+oc new-app --name bnginx --image bitnami/nginx
+# Generate self signed cert. hostname bnginx-netlab.apps-crc.testing
+
+$./cert_generator.sh bnginx-netlab.apps-crc.testing
+creating CA
+Generating RSA private key, 4096 bit long modulus (2 primes)
+...................................++++
+...............................................................................................................++++
+e is 65537 (0x010001)
+generating key for the doamin $1
+Generating RSA private key, 2048 bit long modulus (2 primes)
+.................+++++
+..........+++++
+e is 65537 (0x010001)
+creating csr
+signing the cert using the CA credentials
+Signature ok
+subject=C = US, ST = CA, O = "MyOrg, Inc.", CN = bnginx-netlab.apps-crc.testing
+Getting CA Private Key
+
+$ls openssl/
+bnginx-netlab.apps-crc.testing.crt  bnginx-netlab.apps-crc.testing.csr  bnginx-netlab.apps-crc.testing.key  rootCA.crt  rootCA.key  rootCA.srl
+
+$oc create route edge --service=bnginx --cert=./openssl/bnginx-netlab.apps-crc.testing.crt --key=./openssl/bnginx-netlab.apps-crc.testing.key --ca-cert=./openssl/rootCA.crt --port 8080 --hostname=bgninx-netlab.apps-crc.testing
+
+## wola!
+$oc get route
+NAME     HOST/PORT                        PATH   SERVICES   PORT   TERMINATION   WILDCARD
+bnginx   bgninx-netlab.apps-crc.testing          bnginx     8080   edge          None
+$
+$
+$curl https://bgninx-netlab.apps-crc.testing
+curl: (60) SSL certificate problem: self signed certificate in certificate chain
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the web page mentioned above.
+$curl --insecure https://bgninx-netlab.apps-crc.testing
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+
+```
+
+#### Verify it is using the selfsigned cert
+
+```
+$ echo quit | openssl s_client -showcerts -servername bgninx-netlab.apps-crc.testing -connect bgninx-netlab.apps-crc.testing:443| grep issuer
+depth=1 C = US, ST = CA, O = "MyOrg, Inc.", CN = crc.example.com
+verify error:num=19:self signed certificate in certificate chain
+verify return:1
+depth=1 C = US, ST = CA, O = "MyOrg, Inc.", CN = crc.example.com
+verify return:1
+depth=0 C = US, ST = CA, O = "MyOrg, Inc.", CN = bnginx-netlab.apps-crc.testing
+verify return:1
+DONE
+issuer=C = US, ST = CA, O = "MyOrg, Inc.", CN = crc.example.com
+```
