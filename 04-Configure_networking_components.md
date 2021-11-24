@@ -135,8 +135,10 @@ issuer=C = US, ST = CA, O = "MyOrg, Inc.", CN = crc.example.com
 $oc new-app --name=bnginx --dry-run --image=bitnami/nginx -o yaml > pass.yaml
 # Now update pass.yaml with volumeMounts and volumes. check pass.yaml in the repo
 
+# we can also add ca-cert if it is not selfsigned. creating a new generic to store ca cert
 $oc create secret tls bnginx-ssl --cert=./openssl/bnginx-netlab.apps-crc.testing.crt --key=./openssl/bnginx-netlab.apps-crc.testing.key 
 secret/bnginx-ssl created
+$oc create secret generic ca-cert --from-file=./openssl/rootCA.crt 
 $oc create cm bnginx-config --from-file ./bnginx.conf
 $oc apply  -f pass.yaml 
 deployment.apps/bnginx configured
