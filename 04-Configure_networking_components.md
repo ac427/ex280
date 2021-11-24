@@ -128,3 +128,77 @@ verify return:1
 DONE
 issuer=C = US, ST = CA, O = "MyOrg, Inc.", CN = crc.example.com
 ```
+# Passthrough route
+
+```
+# create config file with below command
+$oc new-app --name=bnginx --dry-run --image=bitnami/nginx -o yaml > pass.yaml
+# Now update pass.yaml with volumeMounts and volumes. check pass.yaml in the repo
+
+$oc create secret tls bnginx-ssl --cert=./openssl/bnginx-netlab.apps-crc.testing.crt --key=./openssl/bnginx-netlab.apps-crc.testing.key 
+secret/bnginx-ssl created
+$oc create cm bnginx-config --from-file ./bnginx.conf
+$oc apply  -f pass.yaml 
+deployment.apps/bnginx configured
+service/bnginx configured
+$oc get pods
+NAME                    READY   STATUS    RESTARTS   AGE
+bnginx-fcdfb557-wlkzg   1/1     Running   0          4s
+$oc create route passthrough bnginx --service=bnginx --port=8443 --hostname=bnginx-netlab.apps-crc.testing
+route.route.openshift.io/bnginx created
+$oc get svc
+NAME     TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)             AGE
+bnginx   ClusterIP   10.217.4.137   <none>        8080/TCP,8443/TCP   2m49s
+$oc get routes
+NAME     HOST/PORT                        PATH   SERVICES   PORT   TERMINATION   WILDCARD
+bnginx   bnginx-netlab.apps-crc.testing          bnginx     8443   passthrough   None
+
+#### Verification: Run a debug pod to test https connection
+```
+$oc debug -t deployment/bnginx --image=alpine/openssl
+Starting pod/bnginx-debug ...
+Pod IP: 10.217.0.119
+If you don't see a command prompt, try pressing enter.
+/ # echo quit | openssl s_client -showcerts -servername bnginx-netlab.apps-crc.testing -connect bnginx-netlab.apps-crc.testing:443 | grep bnginx
+depth=0 C = US, ST = CA, O = "MyOrg, Inc.", CN = bnginx-netlab.apps-crc.testing
+verify error:num=20:unable to get local issuer certificate
+verify return:1
+depth=0 C = US, ST = CA, O = "MyOrg, Inc.", CN = bnginx-netlab.apps-crc.testing
+verify error:num=21:unable to verify the first certificate
+verify return:1
+DONE
+ 0 s:C = US, ST = CA, O = "MyOrg, Inc.", CN = bnginx-netlab.apps-crc.testing
+subject=C = US, ST = CA, O = "MyOrg, Inc.", CN = bnginx-netlab.apps-crc.testing
+/ # 
+Removing debug pod ...
+$oc debug -t deployment/bnginx --image=curlimages/curl
+Starting pod/bnginx-debug ...
+Pod IP: 10.217.0.120
+If you don't see a command prompt, try pressing enter.
+
+/ $ curl --insecure https://10.217.5.194:8443
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+
+```
