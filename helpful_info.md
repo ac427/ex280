@@ -1,4 +1,4 @@
-#### Item 1: How to generate sample yaml with kind: Pod and volume mounts
+#### Item 1: How to generate sample yaml with kind: Pod and volumemounts
 
 You can look at the online help pages 
 
