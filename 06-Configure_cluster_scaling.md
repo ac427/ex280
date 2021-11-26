@@ -35,19 +35,38 @@ horizontalpodautoscaler.autoscaling/bnginx autoscaled
 $oc get hpa
 NAME     REFERENCE           TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
 bnginx   Deployment/bnginx   <unknown>/10%   1         5         0          4s
+```
 
 `oc autoscale` is applying autoscaling/v1 api
 
-$oc get hpa bottle
-NAME     REFERENCE           TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
-bottle   Deployment/bottle   <unknown>/10%   1         5         0          3s
-```
+
 
 applied fix  https://access.redhat.com/solutions/5428871 and it works for few target resource. It changed the unknown when target type is set to AverageValue, but was still applying  `apiVersion: autoscaling/v1`. It doesn't work for type Utilization
 
 ```
 $oc delete hpa bnginx
 horizontalpodautoscaler.autoscaling "bnginx" deleted
+$cat bnginx-hpa.yaml 
+apiVersion: autoscaling/v2beta2 
+kind: HorizontalPodAutoscaler
+metadata:
+  name: bnginx
+  namespace: hpa
+spec:
+  maxReplicas: 5
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: bnginx
+  metrics: 
+  - type: Resource
+    resource:
+      name: cpu 
+      target:
+        type: AverageValue
+        averageValue: 5m
+
 $oc apply -f bnginx-hpa.yaml 
 horizontalpodautoscaler.autoscaling/bnginx created
 # AFTER A MIN OR SO
