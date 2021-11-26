@@ -1,0 +1,103 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"bnginx:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"bnginx\")].image"}]'
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: bnginx
+      app.kubernetes.io/component: bnginx
+      app.kubernetes.io/instance: bnginx
+    name: bnginx
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        deployment: bnginx
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          deployment: bnginx
+      spec:
+        containers:
+        - image: 'bitnami/nginx'
+          name: bnginx
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          - containerPort: 8443
+            protocol: TCP
+          resources: {}
+          volumeMounts: 
+            - name: bnginx-config
+              mountPath: /opt/bitnami/nginx/conf/server_blocks/
+            - name: bnginx-ssl
+              mountPath: /etc/nginx/ssl
+            - name: bnginx-ca
+              mountPath: /etc/nginx/ssl/ca
+        volumes: 
+        - name: bnginx-ssl
+          projected:
+            defaultMode: 0400 
+            sources:
+            - secret:
+                name: bnginx-ssl
+                items:
+                  - key: tls.key
+                    path: tls.key
+                  - key: tls.crt
+                    path: tls.crt
+        - name: bnginx-ca
+          projected:
+            defaultMode: 0400 
+            sources:
+            - secret:
+                name: ca-cert
+                items:
+                  - key: rootCA.crt
+                    path: rootCA.crt
+        - name: bnginx-config
+          projected:
+            defaultMode: 0400 
+            sources:
+            - configMap: 
+                name: bnginx-config
+                items:
+                  - key: bnginx.conf
+                    path: bnginx.conf
+                    mode: 0777 
+  status: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: bnginx
+      app.kubernetes.io/component: bnginx
+      app.kubernetes.io/instance: bnginx
+    name: bnginx
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    selector:
+      deployment: bnginx
+  status:
+    loadBalancer: {}
+kind: List
+metadata: {}

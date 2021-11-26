@@ -1,0 +1,19 @@
+apiVersion: autoscaling/v2beta2 
+kind: HorizontalPodAutoscaler
+metadata:
+  name: bnginx
+  namespace: hpa
+spec:
+  maxReplicas: 5
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: bnginx
+  metrics: 
+  - type: Resource
+    resource:
+      name: cpu 
+      target:
+        type: AverageValue
+        averageValue: 5m

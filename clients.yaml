@@ -1,0 +1,24 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client1
+spec:
+  containers:
+  - name: client1
+    image: busybox
+    command:
+    - sleep
+    - "infinity"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client2
+spec:
+  containers:
+  - name: client2
+    image: busybox
+    command:
+    - sleep
+    - "infinity"

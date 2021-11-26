@@ -51,6 +51,7 @@ NAME                      READY   STATUS    RESTARTS   AGE
 bnginx-76dc54cd74-t2lxp   1/1     Running   0          5s
 ```
 
+You can also update the deployment with `oc edit deployment bnginx` and update the yaml file
 
 #### You can also create a project with nodeSelector. All the resources will be created on node with label env=test in below example
 
@@ -58,3 +59,6 @@ bnginx-76dc54cd74-t2lxp   1/1     Running   0          5s
 # to create project with node selector env=test
 oc new-project --node-selector env=test
 ```
+
+
+

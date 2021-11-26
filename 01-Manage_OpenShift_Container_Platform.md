@@ -59,6 +59,52 @@ oc delete service/bnginx
 
 ```
 
+### Create deployment from source to image (S2I)
+
+```
+$oc new-app https://github.com/ac427/bottle
+--> Found container image eeb6ee3 (2 months old) from Docker Hub for "centos:7"
+
+    * An image stream tag will be created as "centos:7" that will track the source image
+    * A Docker build using source code from https://github.com/ac427/bottle will be created
+      * The resulting image will be pushed to image stream tag "bottle:latest"
+      * Every time "centos:7" changes a new build will be triggered
+
+--> Creating resources ...
+    imagestream.image.openshift.io "centos" created
+    imagestream.image.openshift.io "bottle" created
+    buildconfig.build.openshift.io "bottle" created
+    deployment.apps "bottle" created
+    service "bottle" created
+--> Success
+    Build scheduled, use 'oc logs -f buildconfig/bottle' to track its progress.
+    Application is not exposed. You can expose services to the outside world by executing one or more of the commands below:
+     'oc expose service/bottle' 
+    Run 'oc status' to view your app.
+```
+
+### create a new app with deploymentconfig. DeploymentConfig is a openshift resource (depricated in kubernetes)
+
+```
+$oc new-app --as-deployment-config --name=bnginx --image=bitnami/nginx
+--> Found container image e3d007c (14 hours old) from Docker Hub for "bitnami/nginx"
+
+    * An image stream tag will be created as "bnginx:latest" that will track this image
+    * This image will be deployed in deployment config "bnginx"
+    * Ports 8080/tcp, 8443/tcp will be load balanced by service "bnginx"
+      * Other containers can access this service through the hostname "bnginx"
+
+--> Creating resources ...
+    imagestream.image.openshift.io "bnginx" created
+    deploymentconfig.apps.openshift.io "bnginx" created
+    service "bnginx" created
+--> Success
+    Application is not exposed. You can expose services to the outside world by executing one or more of the commands below:
+     'oc expose service/bnginx' 
+    Run 'oc status' to view your app.
+```
+
+
 ###  Examine resources and cluster status
 
 ```
