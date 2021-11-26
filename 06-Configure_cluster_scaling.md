@@ -1,12 +1,12 @@
 # Manual scaling of pods
 
 ```
-[abc@foo 12:52:41 - ex-280]$oc get deployment
+$oc get deployment
 NAME     READY   UP-TO-DATE   AVAILABLE   AGE
 bnginx   1/1     1            1           102m
-[abc@foo 12:52:45 - ex-280]$oc scale --replicas=2 deployment/bnginx
+$oc scale --replicas=2 deployment/bnginx
 deployment.apps/bnginx scaled
-[abc@foo 12:53:01 - ex-280]$oc get deployment
+$oc get deployment
 NAME     READY   UP-TO-DATE   AVAILABLE   AGE
 bnginx   1/2     2            1           102m
 ```
