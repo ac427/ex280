@@ -14,3 +14,37 @@ remote file exists
 / # 
 ```
 
+# Troubleshooting Network connection
+
+from `oc debug -h`
+
+```
+Examples:
+  # Start a shell session into a pod using the OpenShift tools image
+  oc debug
+  
+  # Debug a currently running deployment by creating a new pod
+  oc debug deploy/test
+  
+  # Debug a node as an administrator
+  oc debug node/master-1
+  
+  # Launch a shell in a pod using the provided image stream tag
+  oc debug istag/mysql:latest -n openshift
+  
+  # Test running a job as a non-root user
+  oc debug job/test --as-user=1000000
+  
+  # Debug a specific failing container by running the env command in the 'second' container
+  oc debug daemonset/test -c second -- /bin/env
+  
+  # See the pod that would be created to debug
+  oc debug mypod-9xbc -o yaml
+  
+  # Debug a resource but launch the debug pod in another namespace
+  # Note: Not all resources can be debugged using --to-namespace without modification. For example,
+  # volumes and service accounts are namespace-dependent. Add '-o yaml' to output the debug pod definition
+  # to disk.  If necessary, edit the definition then run 'oc debug -f -' or run without --to-namespace
+  oc debug mypod-9xbc --to-namespace testns
+```
+
