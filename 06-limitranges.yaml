@@ -1,0 +1,6 @@
+# Limit Ranges
+
+- Limit range resource defines default, minimum and maximum values for compute resource requests
+- Limit range can be set on a project, as well as individual resources
+- Limit range can specify cpu,memory for containers and pods and storage for images and pvc
+- Difference between quota and limit ranges is limit ranges specifies allowed values for individual resources and quota is for the whole project
