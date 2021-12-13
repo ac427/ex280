@@ -6,8 +6,7 @@
 - effect is one of the following
   - NoSchedule
   - PreferNoSchedule
-  - NoExecute - No new pods are scheduled and existing pods that doesn't match toleration will be evicted.
-
+  - NoExecute - No new pods are scheduled and existing pods that doesn't match toleration will be evicted. 
 Note: NoExecute will kill crc cluster. 
 - Use tolerationSeconds to specify how long it takes to evict pods
 when NoExecute is specified
