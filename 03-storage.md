@@ -134,5 +134,13 @@ make configuration changes via `machineconfig` objects:
 Last login: Tue Dec 14 02:17:54 2021 from 192.168.130.1
 [core@crc-ktfxm-master-0 ~]$ cat /mnt/data/hello.html 
 hello
-
+[core@crc-ktfxm-master-0 ~]$ echo from crc >> /mnt/data/hello.html 
+[core@crc-ktfxm-master-0 ~]$ logout
+Connection to 192.168.130.11 closed.
+$oc rsh pv-pod 
+# ls /usr/share/nginx/html
+hello.html
+# cat /usr/share/nginx/html/hello.html
+hello
+from crc
 ```
