@@ -126,6 +126,8 @@ $oc apply -f pvc.yaml
 persistentvolumeclaim/pv-claim created
 ```
 
+Status changed to Bound
+
 ```
 $oc get pv | egrep "NAME|ex280"
 NAME       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM                                                 STORAGECLASS   REASON   AGE
