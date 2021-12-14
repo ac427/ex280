@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: empty-dir
+spec:
+  containers:
+    - name: sleep1
+      command:
+        - sleep
+        - infinity
+      image: busybox
+      volumeMounts:
+        - name: test
+          mountPath: /data
+
+    - name: sleep2
+      command:
+        - sleep
+        - '30'
+      image: busybox
+      volumeMounts:
+        - name: test
+          mountPath: /data
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+  volumes:
+    - name: test
+      emptyDir: {}
