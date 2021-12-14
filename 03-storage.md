@@ -81,8 +81,6 @@ $oc get pv | egrep 'ex280|NAME'
 NAME       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM                                                 STORAGECLASS   REASON   AGE
 pv-ex280   2Gi        RWO            Retain           Available                                                                                 100s
 
-
-```
 $oc apply -f pvc.yaml 
 persistentvolumeclaim/pv-claim created
 ```
