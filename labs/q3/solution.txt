@@ -2,7 +2,9 @@
 - search for localstorage in the operatorhub and install it with default settings
 - create a local storage using the gui ( check local.png). It will give you an error (check err.png)
 - the error is quite clear. It is looking for `spec.storageClassDevices.devicePaths`. Just switch to yaml view and update the devicePath we created in the prep and apply.
-![err](https://github.com/ac427/ex-280/raw/main/labs/q3/err.png)
+![err](err.png)
+
+
 - Also check local.png and local-yaml.png for reference
 
 verify step with oc command
