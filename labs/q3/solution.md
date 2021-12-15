@@ -1,12 +1,15 @@
 - login to console as admin
 - search for localstorage in the operatorhub and install it with default settings
+![local](operator.png)
 - create a local storage using the gui ( check local.png). It will give you an error (check err.png)
+![local](local.png)
+
+![err](err.png)
+
 - the error is quite clear. It is looking for `spec.storageClassDevices.devicePaths`. Just switch to yaml view and update the devicePath we created in the prep and apply.
 
-![err](labs/q3/err.png)
+![yaml](local-yaml.png)
 
-
-- Also check local.png and local-yaml.png for reference
 
 verify step with oc command
 
