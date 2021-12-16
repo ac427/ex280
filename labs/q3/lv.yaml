@@ -5,7 +5,8 @@ metadata:
   namespace: "local-storage" 
 spec:
   storageClassDevices:
-    - storageClassName: "localblock-sc"
-#      volumeMode: Block  
+    - storageClassName: "local-sc"
+      volumeMode: Filesystem 
+      fsType: ext4 
       devicePaths: 
         - /dev/loop0

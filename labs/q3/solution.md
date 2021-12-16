@@ -7,40 +7,20 @@ Even after following, the pvc is still in pending state. Not sure what was wrong
 
 ```
 $oc new-project local-storage
+
 $oc apply -f lv.yaml 
 localvolume.local.storage.openshift.io/local-disks created
-
-$oc get all -n local-storage
-NAME                                          READY   STATUS    RESTARTS   AGE
-pod/diskmaker-manager-98g2n                   2/2     Running   0          3m14s
-pod/local-storage-operator-7c448f99b8-qc6sm   1/1     Running   0          12m
-
-NAME                                      TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
-service/local-storage-diskmaker-metrics   ClusterIP   10.217.5.204   <none>        8383/TCP   3m14s
-
-NAME                               DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
-daemonset.apps/diskmaker-manager   1         1         1       1            1           <none>          3m14s
-
-NAME                                     READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/local-storage-operator   1/1     1            1           12m
-
-NAME                                                DESIRED   CURRENT   READY   AGE
-replicaset.apps/local-storage-operator-7c448f99b8   1         1         1       12m
 $oc get pv | grep local
-local-pv-5647ba0b   1000Mi     RWO            Delete           Available                                                         localblock-sc            3m1s
-$
-
-$oc apply -f lv.yaml 
-localvolume.local.storage.openshift.io/local-disks created
+local-pv-994b1556   1000Mi     RWO            Delete           Available                                                         local-sc                1s
 $oc apply -f pvc.yaml 
-persistentvolumeclaim/local-pvc-name created
+persistentvolumeclaim/local-pvc-ex280 created
 $oc get pvc
-NAME             STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS    AGE
-local-pvc-name   Pending                                      localblock-sc   4s
-$oc describe pvc local-pvc-name
-Name:          local-pvc-name
+NAME              STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+local-pvc-ex280   Pending                                      local-sc       2s
+$oc describe pvc local-pvc-ex280 
+Name:          local-pvc-ex280
 Namespace:     local-storage
-StorageClass:  localblock-sc
+StorageClass:  local-sc
 Status:        Pending
 Volume:        
 Labels:        <none>
@@ -53,7 +33,9 @@ Used By:       <none>
 Events:
   Type    Reason                Age                From                         Message
   ----    ------                ----               ----                         -------
-  Normal  WaitForFirstConsumer  43h (x2 over 43h)  persistentvolume-controller  waiting for first consumer to be created before binding
-$oc get pv | grep local
-local-pv-5647ba0b   1000Mi     RWO            Delete           Available                                                         localblock-sc            13m
+  Normal  WaitForFirstConsumer  44h (x2 over 44h)  persistentvolume-controller  waiting for first consumer to be created before binding
+$
+
 ```
+
+Not sure why it is in pending state even after following the instructions from the docs. Gave up finally. If anyone knows the fix, please create a pr or git issue
