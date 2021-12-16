@@ -39,3 +39,25 @@ $
 ```
 
 Not sure why it is in pending state even after following the instructions from the docs. Gave up finally. If anyone knows the fix, please create a pr or git issue
+
+
+
+# Works when creating pv and pvc
+
+```
+$oc apply -f pv.yaml 
+persistentvolume/example-pv-filesystem created
+
+$oc apply -f pvc1.yaml 
+persistentvolumeclaim/local-pvc-ex280-manual created
+
+$oc get pv | grep local
+example-pv-filesystem   1000Mi     RWO            Delete           Bound       local-storage/local-pvc-ex280-manual                  local-storage-manual            3m10s
+local-pv-994b1556       1000Mi     RWO            Delete           Available                                                         local-sc     
+
+$oc get pvc
+NAME                     STATUS    VOLUME                  CAPACITY   ACCESS MODES   STORAGECLASS           AGE
+local-pvc-ex280          Pending                                                     local-sc               11m
+local-pvc-ex280-manual   Bound     example-pv-filesystem   1000Mi     RWO            local-storage-manual   2m58s
+
+```

@@ -1,0 +1,12 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: local-pvc-ex280-manual
+spec:
+  accessModes:
+  - ReadWriteOnce
+  volumeMode: Filesystem 
+  resources:
+    requests:
+      storage: 124Mi 
+  storageClassName: local-storage-manual
