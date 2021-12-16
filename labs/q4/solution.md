@@ -97,3 +97,46 @@ $oc delete user kubeadmin
 user.user.openshift.io "kubeadmin" deleted
 
 ```
+
+
+
+# Part 2
+
+
+```
+$cat /tmp/htpasswd 
+abc:$2y$05$Z5iHP5cXTQFo7Cnun.EcrOcWfpVgjtuoWTBsuHhgaeuLBKVmNNL7K
+linda:$2y$05$67nC9i1vh1CRv42Gp3DR3eHrMBbPwhlExp4yMqMxZbWo2ilHlcllW
+$oc create secret generic localusers --from-file /tmp/htpasswd -n openshift-config
+```
+
+`oc edit oauth cluster` and update with spec.identityProviders[0].htpasswd.fileData.name and spec.identityProviders[0].htpasswd/name
+
+
+```
+spec:
+  identityProviders:
+  - htpasswd:
+      fileData:
+        name: localusers
+    mappingMethod: claim
+    name: ex280-users
+    type: HTPasswd
+```
+
+
+The pods should restart after the upate. You can also manually kick with below.
+
+```
+$oc rollout restart deployment/oauth-openshift  -n openshift-authentication
+deployment.apps/oauth-openshift restarted
+
+```
+
+Relogin as user abc
+
+```
+NAME                    IDP NAME      IDP USER NAME   USER NAME   USER UID
+ex280-users:abc         ex280-users   abc             abc         05c8ba59-9e2b-436d-bd88-ea5bf387d3cc
+ex280-users:developer   ex280-users   developer       developer   f7aad4d4-41d2-4f3b-a408-e1f046901087
+```
