@@ -84,6 +84,12 @@ Note: doc says to run below, but there is no such secret in crc cluster
 $htpasswd -D /tmp/htpasswd kubeadmin
 Deleting password for user kubeadmin
 
+$oc set data secret/htpass-secret -n openshift-config --from-file /tmp/htpasswd
+secret/htpass-secret data updated
+$oc rollout restart deployment/oauth-openshift  -n openshift-authentication
+deployment.apps/oauth-openshift restarted
+
+
 $oc delete identities developer:kubeadmin
 identity.user.openshift.io "developer:kubeadmin" deleted
 
