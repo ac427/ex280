@@ -1,3 +1,4 @@
+$oc new-project database
 $oc new-app --name mysql --image registry.access.redhat.com/rhscl/mysql-57-rhel7:5.7-47
 --> Found container image 77d20f2 (2 years old) from registry.access.redhat.com for "registry.access.redhat.com/rhscl/mysql-57-rhel7:5.7-47"
 
@@ -34,6 +35,9 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 | information_schema |
 | test_secrets       |
 +--------------------+
+
+
+$oc new-app --name quotes --image quay.io/redhattraining/famous-quotes
 
 $oc set env deployment/quotes --from secrets/mysql --prefix QUOTES_
 deployment.apps/quotes updated

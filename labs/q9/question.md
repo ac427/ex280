@@ -1,0 +1,5 @@
+- continue from previous question. use existing project database
+- create a role dbas add verbs get,list,watch to pods,secrets,configmaps,deployments,services for namespace database
+- create role binding  dbas
+- add user lee to dbas
+- test the resources lee has access to

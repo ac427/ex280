@@ -1,4 +1,4 @@
-create new project secrets-
+create new project database
 create a new deployment with image registry.access.redhat.com/rhscl/mysql-57-rhel7:5.7-47
 create secret/mysql from env file env_vars
 update deployment mysql with env from secret/mysql and prefix MYSQL
