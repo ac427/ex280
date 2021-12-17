@@ -72,8 +72,8 @@ mysql    ClusterIP   10.217.5.104   <none>        3306/TCP   10m
 quotes   ClusterIP   10.217.5.131   <none>        8000/TCP   4m53s
 $oc get routes
 NAME     HOST/PORT                              PATH   SERVICES   PORT       TERMINATION   WILDCARD
-quotes   quotes-secrets-auth.apps-crc.testing          quotes     8000-tcp                 None
-$curl http://quotes-secrets-auth.apps-crc.testing
+quotes   quotes-database.apps-crc.testing          quotes     8000-tcp                 None
+$curl http://quotes-database.apps-crc.testing
 <html>
 	<head>
         <title>Quotes</title>
@@ -121,8 +121,8 @@ $curl http://quotes-secrets-auth.apps-crc.testing
 </html>
 
 
-$curl http://quotes-secrets-auth.apps-crc.testing/random
+$curl http://quotes-database.apps-crc.testing/random
 8: Those who can imagine anything, can create the impossible.
 - Alan Turing
-$curl http://quotes-secrets-auth.apps-crc.testing/status
+$curl http://quotes-database.apps-crc.testing/status
 Database connection OK
