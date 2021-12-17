@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: quotes
+    app.kubernetes.io/component: quotes
+    app.kubernetes.io/instance: quotes
+  name: quotes
+  namespace: network-debug
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      deployment: quotes
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        deployment: quotes
+    spec:
+      containers:
+      - env:
+        - name: QUOTES_DATABASE
+          valueFrom:
+            secretKeyRef:
+              key: database
+              name: mysql
+        - name: QUOTES_HOSTNAME
+          valueFrom:
+            secretKeyRef:
+              key: hostname
+              name: mysql
+        - name: QUOTES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: mysql
+        - name: QUOTES_USER
+          valueFrom:
+            secretKeyRef:
+              key: user
+              name: mysql
+        image: quay.io/redhattraining/famous-quotes@sha256:11644d8db7f1ccc4697267f97421aa0550d01267dfa0ff68bbf62c1ed6654027
+        imagePullPolicy: IfNotPresent
+        name: quotes
+        ports:
+        - containerPort: 8000
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

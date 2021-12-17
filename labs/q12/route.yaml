@@ -1,0 +1,18 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: quotes
+    app.kubernetes.io/component: quotes
+    app.kubernetes.io/instance: quotes
+  name: quotes
+  namespace: network-debug
+spec:
+  host: quotes-network-debug.apps-crc.testing
+  port:
+    targetPort: 8000-tcp
+  to:
+    kind: Service
+    name: quotes
+    weight: 100
+  wildcardPolicy: None
