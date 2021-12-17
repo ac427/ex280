@@ -27,7 +27,7 @@ quotes-654c588475-gngrt   1/1     Running   0          43m
 ```
 * get routes is failing as we did not give access to routes resource
 
-``
+```
 $oc get routes -n database
 Error from server (Forbidden): routes.route.openshift.io is forbidden: User "lee" cannot list resource "routes" in API group "route.openshift.io" in the namespace "database"
 ```
