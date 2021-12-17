@@ -159,3 +159,32 @@ $oc get pods -A | wc -l
 Error from server (Forbidden): pods is forbidden: User "linda" cannot list resource "pods" in API group "" at the cluster scope
 0
 ```
+
+# Part 3
+
+```
+$oc adm groups new qa-group
+group.user.openshift.io/qa-group created
+$oc adm groups new uat-group
+group.user.openshift.io/uat-group created
+$oc adm groups new support-group
+group.user.openshift.io/support-group created
+$oc adm groups add-users qa-group joe
+group.user.openshift.io/qa-group added: "joe"
+$oc adm groups add-users support-group jill
+group.user.openshift.io/support-group added: "jill"
+$oc adm groups add-users uat-group raj
+group.user.openshift.io/uat-group added: "raj"
+$oc adm policy add-cluster-role-to-group view qa-group
+clusterrole.rbac.authorization.k8s.io/view added: "qa-group"
+$oc adm policy add-cluster-role-to-group  edit support-group
+clusterrole.rbac.authorization.k8s.io/edit added: "support-group"
+$oc adm policy add-cluster-role-to-group basic-user uat-group
+clusterrole.rbac.authorization.k8s.io/basic-user added: "uat-group"
+
+$oc get clusterrolebindings -o wide | egrep 'NAME|group' |  tr -s [:space:]
+NAME ROLE AGE USERS GROUPS SERVICEACCOUNTS
+basic-user ClusterRole/basic-user 8m7s uat-group 
+edit ClusterRole/edit 5m55s support-group 
+view ClusterRole/view 6m20s qa-group
+```

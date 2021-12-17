@@ -1,0 +1,10 @@
+- remove any existing users other than admin (abc). add user lee,robin,jack
+- add lee to cluster-admin
+- create a group managers and add robin to managers group
+- create group developers add jack to developers group
+- add developers to cluster-role edit
+- verify lee has admin rights. run get nodes
+- remove lee from cluster-admin 
+- add group operator and add lee to it. add view role to operator group and verify
+- restore any default settings back in place
+- make sure only managers group can only create new projects ( lee can't create projects and robin can as a manager)
