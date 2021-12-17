@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: quotes
+    app.kubernetes.io/component: quotes
+    app.kubernetes.io/instance: quotes
+  name: quotes
+  namespace: network-debug
+spec:
+  clusterIP: 10.217.4.139
+  clusterIPs:
+  - 10.217.4.139
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: 8000-tcp
+    port: 8000
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    deployment: quotes
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

@@ -1,18 +1,15 @@
 # Prep
 
-```
-oc new-project network-debug
-oc new-app --name app --image=nginx
-```
+Run below command as developer
+
+Don't look at the file until you try to solve the issue.
 
 ```
-for i in $(ls *.yaml);do oc apply -f $i;done
+./setup.sh
 
 ```
-
-# Below command should return OK message, but it is returning error. Debug and fix!
+# Below command should return `Database connection OK`. Debug the failure
 
 ```
 $curl quotes-network-debug.apps-crc.testing/status
-Database connection OK
 ```
