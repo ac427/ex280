@@ -1,0 +1,4 @@
+user=myuser
+password=redhat123
+database=test_secrets
+hostname=mysql

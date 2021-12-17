@@ -8,3 +8,4 @@
 - add group operator and add lee to it. add view role to operator group and verify
 - restore any default settings back in place
 - make sure only managers group can only create new projects ( lee can't create projects and robin can as a manager)
+- list who all can create namespaces in the cluster
