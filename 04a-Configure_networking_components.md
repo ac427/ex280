@@ -52,7 +52,7 @@ oc new-project netlab
 oc new-app --name bnginx --image bitnami/nginx
 # Generate self signed cert. hostname bnginx-netlab.apps-crc.testing
 
-$./cert_generator.sh bnginx-netlab.apps-crc.testing
+$./scripts/cert_generator.sh bnginx-netlab.apps-crc.testing
 creating CA
 Generating RSA private key, 4096 bit long modulus (2 primes)
 ...................................++++
