@@ -9,3 +9,5 @@ oc delete service app
 }
 
 setup &> /dev/null
+
+sleep 30s
