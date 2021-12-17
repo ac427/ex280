@@ -8,7 +8,7 @@ $diff .solution quotes-service.yaml
 <     deployment: quotes
 ---
 >     deployment: app
-$oc apply -f solution
+$oc apply -f .solution
 service/quotes configured
 $curl quotes-network-debug.apps-crc.testing/status
 Database connection OK
