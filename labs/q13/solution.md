@@ -34,6 +34,8 @@ dropped privs to tcpdump
 tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
 listening on crc, link-type EN10MB (Ethernet), snapshot length 262144 bytes
 
+
+
 ^C38 packets captured
 38 packets received by filter
 0 packets dropped by kernel
@@ -111,4 +113,4 @@ $echo quit | openssl s_client -showcerts -servername bnginx-network-debug.apps-c
 subject=C = US, ST = CA, O = "MyOrg, Inc.", CN = bnginx-network-debug.apps-crc.testing
 issuer=C = US, ST = CA, O = "MyOrg, Inc.", CN = crc.example.com
 ```
-
+![firefox](./firefox-about-cert.png)
