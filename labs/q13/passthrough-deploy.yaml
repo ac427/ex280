@@ -1,0 +1,127 @@
+---
+apiVersion: v1
+data:
+  rootCA.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUZkVENDQTEyZ0F3SUJBZ0lVWkxxMmV3N1IvcTM0YnJ4NTlHTzduWHBHZVdjd0RRWUpLb1pJaHZjTkFRRUwKQlFBd1NqRUxNQWtHQTFVRUJoTUNWVk14Q3pBSkJnTlZCQWdNQWtOQk1SUXdFZ1lEVlFRS0RBdE5lVTl5Wnl3ZwpTVzVqTGpFWU1CWUdBMVVFQXd3UFkzSmpMbVY0WVcxd2JHVXVZMjl0TUI0WERUSXhNVEl4T0RFMU16RXpOVm9YCkRUSTBNVEF3TnpFMU16RXpOVm93U2pFTE1Ba0dBMVVFQmhNQ1ZWTXhDekFKQmdOVkJBZ01Ba05CTVJRd0VnWUQKVlFRS0RBdE5lVTl5Wnl3Z1NXNWpMakVZTUJZR0ExVUVBd3dQWTNKakxtVjRZVzF3YkdVdVkyOXRNSUlDSWpBTgpCZ2txaGtpRzl3MEJBUUVGQUFPQ0FnOEFNSUlDQ2dLQ0FnRUFtcU1QTzAxMkYrT3NUTGJNanhUVFpZZHFtTzJNCjRzazFpNDFjZVRKSWZxK3JFTGQ0YTg4dmtqcUx3TkxyQkdSS0VTaFU2dTBubmp3dkd2SVZXQlFPRDcraDhOekUKWFdQUkRYVHZTYWJENzU2VEhycENYYTcvTkdVcExVUlBLajRMQnorZ0JEM0p5ZmgxeS9YRnUzVkt3eHNYZUJFVgoxTEpKL1hmYmpLL21pRW1iYXFNNHZqWW9qZnhZQVZrVktpOWNrR0lHNVpLaUVGU2VTczAyREpBRGFSNVhhbUg0CjMxMThWSU4xa2U1NjhDNnRHQ3VOQU01dGV0Z3I4RXU5aWdJS2ZDQXoxeE56ak1Od0MvRjhwZUJ0MUFSWHlhS3gKUmhhZVMxN0MydlY4cFRvcFJVdVRzY25Nc2I1Q2ZCVTY5TVd1VlR6YkxBMDM3RmlieU02RHNidDFkYWhsTDZYTQpEYlptTTU2TWJmVG01UTRCUUZiWE9YR1NtWEZGWVhZdDJWVEs3OTdNeDdzdGRqK2p1ZVFTNkxaVUEyRGNGdXQ0ClRpamNoSVRDY1JzTnpPbkJNSCtLRS95VHdETGRDSlRrbWNXUGJhR3IwbmVPeVBqWG9hZ3gwNlRLMjg1cDhFODAKeU15Nm1wakhFRzVKY05FTVpoNEtPclpXRlNhNHNNUGh2eUpldklTVUl2OUxQeTFwNXZOaUMwSTdqcHlZUDQ0VApBZVlFdFVGYnlVaWhCUW5YcVQxUisxeHZmMWJvQXZZTHIyMGo3UUYrajM5QWpMRUc5MTZhdG9lNHRUMHBHUEhCCnp3Y1E0SWtNUUpaVDhpUU9nOUorTnI2SjVHakV3TTBmdjhUd0F1RkVQZjBtTFp6QW5YK3B6Q0I0cmhtcWFuOUgKUlFxT2dYamYrVWNqY05VQ0F3RUFBYU5UTUZFd0hRWURWUjBPQkJZRUZQemFkSFQzbW5MYkJTMmlmK2hiQ3d3aAo0b3NkTUI4R0ExVWRJd1FZTUJhQUZQemFkSFQzbW5MYkJTMmlmK2hiQ3d3aDRvc2RNQThHQTFVZEV3RUIvd1FGCk1BTUJBZjh3RFFZSktvWklodmNOQVFFTEJRQURnZ0lCQUVYN08wb1FSODBmYlkvMFo2VzhzYjZnTm5TTWF3Q0oKT0d3N25RS1VwZnh0MS9mbHFYWmJyQlpWTzdDMVVDRjFyQ1dKbHk1OHVYaUNWZjJ4a1ZZQ1lJY0pLcjdKeVU1SwpuTWJsOGdUa2o2MWRVbXY3Ym1zZG43eHJlaXZPTjdxcW0xaVRxNUYvVGlVWHpUb0JURm9FckZmNlUveUNvN2RhCnRqNmdCRGI3ZkFZTzFVaDFJOVMvYlEyekJSdWtsaGRyRGF3T0pwVUxFQnpuTUUyNGovQVVmUVp2QlMvWlhBMkkKVVZRSkVWZEpFbjdaazZ3aEdTUlJUeEs0ZlpsSUlMRW1hU2V5Qkkxem1SRHpKa1hmaDNqWTg4NTFXenNxMGR6UgpxLy9nbU85eEpnelRSS2JWTEw1RkR6VWxXQWE5OW1nWnJwT0NYaE1qTFRUOVBJZTUvVEx6cEJqYVpYTld1d3l5ClQyUW04ZDlHRWxYSkdMSjBqZkhhY0pYUTJ2cFBKdjhjYUNOanVuRk9PV08rWVNNNDVHSlBXZXY1SG9nY0w0czAKNDdDc3pkSWRIaXg1NXpaZHZOZUNxNHhjZVJDNVVTVExqMEwwVlFGa3AwT0srOE4xeHJFcUpZNXhnbHdFV2tEQwp1Wm1CcEZxeUFzeUxtN3ZLWDlTZUxGRXZndjVOM0F2OGNYMnpFa1A5eTFqRkYyVUp1YUdRNnl4SFkrYW1RUndiCkpXaFFaMGN3M3JsUGVLdm5nY3RDZmRheStoanR4dHNJaVU5WERLaWd5dUhNcGF3dWlDdkJPOHd5ZWE1QmsvWTAKYVFVOUxCZlhIR1NmNHloOGJGaXdvaVcyYXFkMnhCV21TdWx2aC9FampwMUFnM2VaRk1Td295YzBoSzJ3RVJKOQpreS8vTnVWNEg5WEsKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+kind: Secret
+metadata:
+  name: ca-cert
+  namespace: network-debug
+type: Opaque
+---
+---
+apiVersion: v1
+data:
+  bnginx.conf: "server {\n          listen
+    8443 ssl;\n          root /opt/bitnami/nginx/html;\n          index index.html;\n\n
+    \     server_name bnginx-netlab.apps-crc.testing;\n      ssl_certificate /etc/nginx/ssl/tls.crt;\n
+    \     ssl_certificate_key /etc/nginx/ssl/tls.key; \n      ssl_trusted_certificate
+    /etc/nginx/ssl/ca/rootCA.crt;\n      ssl_session_timeout 1d;\n      ssl_session_cache
+    shared:SSL:50m;\n      ssl_session_tickets off;\n      # modern configuration.
+    tweak to your needs.\n      ssl_protocols TLSv1.2;\n      ssl_ciphers 'ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256';\n
+    \     ssl_prefer_server_ciphers on; \n      # HSTS (ngx_http_headers_module is
+    required) (15768000 seconds = 6 months)\n      add_header Strict-Transport-Security
+    max-age=15768000;\n      # OCSP Stapling ---\n      # fetch OCSP records from
+    URL in ssl_certificate and cache them\n      ssl_stapling on;\n      ssl_stapling_verify
+    on;\n      location / {\n              try_files $uri $uri/ =404;\n      }\n  }\n"
+kind: ConfigMap
+metadata:
+  name: bnginx-config
+  namespace: network-debug
+---
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"bnginx:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"bnginx\")].image"}]'
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: bnginx
+      app.kubernetes.io/component: bnginx
+      app.kubernetes.io/instance: bnginx
+    name: bnginx
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        deployment: bnginx
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          deployment: bnginx
+      spec:
+        containers:
+        - image: 'bitnami/nginx'
+          name: bnginx
+          ports:
+          - containerPort: 8443
+            protocol: TCP
+          resources: {}
+          volumeMounts: 
+            - name: bnginx-config
+              mountPath: /opt/bitnami/nginx/conf/server_blocks/
+            - name: bnginx-ssl
+              mountPath: /etc/nginx/ssl
+            - name: bnginx-ca
+              mountPath: /etc/nginx/ssl/ca
+        volumes: 
+        - name: bnginx-ssl
+          projected:
+            defaultMode: 0400 
+            sources:
+            - secret:
+                name: bnginx-ssl
+                items:
+                  - key: tls.key
+                    path: tls.key
+                  - key: tls.crt
+                    path: tls.crt
+        - name: bnginx-ca
+          projected:
+            defaultMode: 0400 
+            sources:
+            - secret:
+                name: ca-cert
+                items:
+                  - key: rootCA.crt
+                    path: rootCA.crt
+        - name: bnginx-config
+          projected:
+            defaultMode: 0400 
+            sources:
+            - configMap: 
+                name: bnginx-config
+                items:
+                  - key: bnginx.conf
+                    path: bnginx.conf
+                    mode: 0777 
+  status: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: bnginx
+      app.kubernetes.io/component: bnginx
+      app.kubernetes.io/instance: bnginx
+    name: bnginx
+  spec:
+    ports:
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    selector:
+      deployment: bnginx
+  status:
+    loadBalancer: {}
+kind: List
+metadata: {}
