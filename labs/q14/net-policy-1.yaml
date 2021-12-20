@@ -1,0 +1,16 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-net1
+spec:
+  podSelector: 
+    matchLabels:
+      deployment: bnginx
+  ingress:
+  - from:
+    - namespaceSelector: 
+        matchLabels:
+          ns: net1
+    ports: 
+    - protocol: TCP
+      port: 8080

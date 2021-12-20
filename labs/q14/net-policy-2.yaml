@@ -1,0 +1,23 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: net-policy2
+spec:
+  podSelector: 
+    matchLabels:
+      deployment: bnginx
+  ingress:
+  - from:
+    - namespaceSelector: 
+        matchLabels:
+          ns: client
+      podSelector: 
+        matchLabels:
+          app: client
+# Below is the or condition
+#    - podSelector: 
+#        matchLabels:
+#          app: client
+    ports: 
+    - protocol: TCP
+      port: 8080
