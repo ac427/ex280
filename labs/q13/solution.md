@@ -1,5 +1,4 @@
-#Task 1
-
+# Task1
 ```
 $oc get routes
 No resources found in network-debug namespace.
@@ -42,7 +41,7 @@ listening on crc, link-type EN10MB (Ethernet), snapshot length 262144 bytes
 ```
 
 
-#Task 2
+# Task 2
 
 ```
 $oc delete routes.route.openshift.io quotes 
