@@ -31,8 +31,9 @@ Creating journal (4096 blocks): done
 Writing superblocks and filesystem accounting information: done
 
 ```
+create new project q3
 
-Install localstorage operator and create loacalvolume named ex280 using the loopback device `/dev/loop0` we created in the prep
+Install localstorage operator in project q3 and create loacalvolume named ex280 using the loopback device `/dev/loop0` we created in the prep
 
 verify the storageclass
 
