@@ -33,7 +33,7 @@ Writing superblocks and filesystem accounting information: done
 ```
 create new project q3
 
-Install localstorage operator in project q3 and create loacalvolume named ex280 using the loopback device `/dev/loop0` we created in the prep
+Install localstorage operator in project q3 and create loacalvolume named ex280 using the loopback device `/dev/loop0` we created in the prep. Pick either Block or any Filesystem
 
 verify the storageclass
 

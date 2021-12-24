@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: bnginx
+  name: bnginx
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: bnginx
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: bnginx
+    spec:
+      affinity:
+         nodeAffinity: 
+           requiredDuringSchedulingIgnoredDuringExecution: 
+             nodeSelectorTerms:
+             - matchExpressions:
+               - key: type 
+                 operator: In 
+                 values:
+                 - dev
+      containers:
+      - image: bitnami/nginx
+        name: nginx
+        resources: {}
+status: {}
