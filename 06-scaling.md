@@ -39,9 +39,14 @@ bnginx   Deployment/bnginx   <unknown>/10%   1         5         0          4s
 
 `oc autoscale` is applying autoscaling/v1 api
 
+applied fix  https://access.redhat.com/solutions/5428871 and it works for few target resource. It changed the unknown when target type is set to AverageValue, but was still applying  `apiVersion: autoscaling/v1`. It doesn't work for type Utilization. I think it is issue with CRC cluster.
 
+```
+$oc describe hpa  | grep Warning
+  Warning  FailedComputeMetricsReplicas  76m (x12 over 78m)     horizontal-pod-autoscaler  invalid metrics (1 invalid out of 1), first error is: failed to get cpu utilization: missing request for cpu
+  Warning  FailedGetResourceMetric       3m56s (x300 over 78m)  horizontal-pod-autoscaler  failed to get cpu utilization: missing request for cpu
 
-applied fix  https://access.redhat.com/solutions/5428871 and it works for few target resource. It changed the unknown when target type is set to AverageValue, but was still applying  `apiVersion: autoscaling/v1`. It doesn't work for type Utilization
+```
 
 ```
 $oc delete hpa bnginx
