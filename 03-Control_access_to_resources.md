@@ -61,6 +61,18 @@ clusterrole.rbac.authorization.k8s.io/ex3-pod-view added: "joe"
 $oc get pods -A | wc -l
 68
 
+
+[abc@foo 05:59:16 - lab]$oc login -u developer -p developer https://api.crc.testing:6443
+Login successful.
+
+You don't have any projects. You can try to create a new project, by running
+
+    oc new-project <projectname>
+
+[abc@foo 06:00:38 - lab]$oc get pods -A | wc -l
+Error from server (Forbidden): pods is forbidden: User "developer" cannot list resource "pods" in API group "" at the cluster scope
+0
+
 ```
 
 #### To view the Users in clusterrolebinding ( Eventhough we created clusterrolebinding, `oc describe clusterrolebinding` is not showing ex280-pod-reader. Not sure if it is bug or my misunderstanding. Below command shows the Kind as ClusterRole though)
