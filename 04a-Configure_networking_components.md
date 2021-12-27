@@ -130,55 +130,47 @@ issuer=C = US, ST = CA, O = "MyOrg, Inc.", CN = crc.example.com
 ```
 # Passthrough route
 
+* create a new app name bitnami/nginx
+* store tls secrets bnginx-netlab.apps-crc.testing/bnginx-netlab.apps-crc.testing.key  bnginx-netlab.apps-crc.testing/bnginx-netlab.apps-crc.testing.crt as bnginx-ssl
+* store  bnginx-netlab.apps-crc.testing/rootCA.crt as generic secret named ca-cert
+* store bnginx.conf as configmap bnginx-config
+* mount secret bnginx-ssl to /etc/nginx/ssl/ to deployment/bnginx
+* mount secret ca-cert to  /etc/nginx/ssl/ca/
+* mount configmap bnginx-config to /opt/bitnami/nginx/conf/server_blocks/
+
 ```
 # create config file with below command
-$oc new-app --name=bnginx --dry-run --image=bitnami/nginx -o yaml > pass.yaml
-# Now update pass.yaml with volumeMounts and volumes. check pass.yaml in the repo
+$oc new-app --name=bnginx --dry-run --image=bitnami/nginx
 
 # we can also add ca-cert if it is not selfsigned. creating a new generic to store ca cert
 $oc create secret tls bnginx-ssl --cert=./bnginx-netlab.apps-crc.testing/bnginx-netlab.apps-crc.testing.crt --key=./bnginx-netlab.apps-crc.testing/bnginx-netlab.apps-crc.testing.key 
 secret/bnginx-ssl created
 $oc create secret generic ca-cert --from-file=./bnginx-netlab.apps-crc.testing/rootCA.crt 
 $oc create cm bnginx-config --from-file ./bnginx.conf
-$oc apply  -f pass.yaml 
-deployment.apps/bnginx configured
-service/bnginx configured
-$oc get pods
-NAME                    READY   STATUS    RESTARTS   AGE
-bnginx-fcdfb557-wlkzg   1/1     Running   0          4s
-$oc create route passthrough bnginx --service=bnginx --port=8443 --hostname=bnginx-netlab.apps-crc.testing
-route.route.openshift.io/bnginx created
+
+$oc set volumes deployment/bnginx --add --type secret --secret-name bnginx-ssl -m /etc/nginx/ssl/
+info: Generated volume name: volume-8lcvr
+deployment.apps/bnginx volume updated
+
+$oc set volumes deployment/bnginx --add --type secret --secret-name ca-cert -m  /etc/nginx/ssl/ca/
+info: Generated volume name: volume-drszz
+deployment.apps/bnginx volume updated
+
+
+
+$oc set volumes deployment/bnginx --add --type configmap --configmap-name bnginx-config -m /opt/bitnami/nginx/conf/server_blocks/
+info: Generated volume name: volume-x8cwl
+deployment.apps/bnginx volume updated
+
+
 $oc get svc
 NAME     TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)             AGE
-bnginx   ClusterIP   10.217.4.137   <none>        8080/TCP,8443/TCP   2m49s
-$oc get routes
-NAME     HOST/PORT                        PATH   SERVICES   PORT   TERMINATION   WILDCARD
-bnginx   bnginx-netlab.apps-crc.testing          bnginx     8443   passthrough   None
-
-#### Verification: Run a debug pod to test https connection
-```
-$oc debug -t deployment/bnginx --image=alpine/openssl
+bnginx   ClusterIP   10.217.5.240   <none>        8080/TCP,8443/TCP   6m27s
+$oc debug -t deployment/bnginx --image curlimages/curl
 Starting pod/bnginx-debug ...
-Pod IP: 10.217.0.119
+Pod IP: 10.217.0.102
 If you don't see a command prompt, try pressing enter.
-/ # echo quit | openssl s_client -showcerts -servername bnginx-netlab.apps-crc.testing -connect bnginx-netlab.apps-crc.testing:443 | grep bnginx
-depth=0 C = US, ST = CA, O = "MyOrg, Inc.", CN = bnginx-netlab.apps-crc.testing
-verify error:num=20:unable to get local issuer certificate
-verify return:1
-depth=0 C = US, ST = CA, O = "MyOrg, Inc.", CN = bnginx-netlab.apps-crc.testing
-verify error:num=21:unable to verify the first certificate
-verify return:1
-DONE
- 0 s:C = US, ST = CA, O = "MyOrg, Inc.", CN = bnginx-netlab.apps-crc.testing
-subject=C = US, ST = CA, O = "MyOrg, Inc.", CN = bnginx-netlab.apps-crc.testing
-/ # 
-Removing debug pod ...
-$oc debug -t deployment/bnginx --image=curlimages/curl
-Starting pod/bnginx-debug ...
-Pod IP: 10.217.0.120
-If you don't see a command prompt, try pressing enter.
-
-/ $ curl --insecure https://10.217.5.194:8443
+/ $ curl --insecure https://10.217.5.240:8443
 <!DOCTYPE html>
 <html>
 <head>
@@ -202,5 +194,15 @@ Commercial support is available at
 <p><em>Thank you for using nginx.</em></p>
 </body>
 </html>
-
+/ $ 
+/ $ 
+$oc create route passthrough bnginx --service=bnginx --port=8443
+route.route.openshift.io/bnginx created
+$oc get route
+NAME     HOST/PORT                        PATH   SERVICES   PORT   TERMINATION   WILDCARD
+bnginx   bnginx-netlab.apps-crc.testing          bnginx     8443   passthrough   None
 ```
+# shows the cert we created.
+
+![Screenshot from 2021-12-27 07-18-39](https://user-images.githubusercontent.com/11317624/147471208-ad8be2bc-476b-4909-aa58-11cdd8a2bbb8.png)
+
