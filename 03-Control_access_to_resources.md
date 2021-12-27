@@ -42,23 +42,24 @@ joe
 $oc login -u kubeadmin -p FV3b7-aTbLJ-UmrWu-aqDGe https://api.crc.testing:6443
 Login successful.
 
-$oc create clusterrole ex280-pod-reader --verb=get,list,watch --resource=pods
-clusterrole.rbac.authorization.k8s.io/ex280-pod-reader created
+$oc adm groups new ex3-pod-view
+group.user.openshift.io/ex3-pod-view created
 
-$oc create clusterrolebinding ex280-pod-reader --clusterrole=ex280-pod-reader  --group=system:authenticated
-clusterrolebinding.rbac.authorization.k8s.io/ex280-pod-reader created
+$oc create clusterrole ex3-pod-view --verb=list --resource=pods
+clusterrole.rbac.authorization.k8s.io/ex3-pod-view created
 
-$oc policy add-role-to-user ex280-pod-reader joe
-clusterrole.rbac.authorization.k8s.io/ex280-pod-reader added: "joe"
-$oc login -u joe -p passw0rd
-Login successful.
+$oc create clusterrolebinding ex3-pod-view --clusterrole=ex3-pod-view
+clusterrolebinding.rbac.authorization.k8s.io/ex3-pod-view created
 
-You don't have any projects. You can try to create a new project, by running
+$oc adm policy add-cluster-role-to-user ex3-pod-view joe
+clusterrole.rbac.authorization.k8s.io/ex3-pod-view added: "joe"
 
-    oc new-project <projectname>
+$oc adm policy add-cluster-role-to-user ex3-pod-view joe
+Warning: User 'joe' not found
+clusterrole.rbac.authorization.k8s.io/ex3-pod-view added: "joe"
 
-$oc get pods --all-namespaces | wc -l
-67
+$oc get pods -A | wc -l
+68
 
 ```
 
