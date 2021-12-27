@@ -54,10 +54,6 @@ clusterrolebinding.rbac.authorization.k8s.io/ex3-pod-view created
 $oc adm policy add-cluster-role-to-user ex3-pod-view joe
 clusterrole.rbac.authorization.k8s.io/ex3-pod-view added: "joe"
 
-$oc adm policy add-cluster-role-to-user ex3-pod-view joe
-Warning: User 'joe' not found
-clusterrole.rbac.authorization.k8s.io/ex3-pod-view added: "joe"
-
 $oc get pods -A | wc -l
 68
 
